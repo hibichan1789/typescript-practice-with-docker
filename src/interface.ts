@@ -1,9 +1,12 @@
 //interface.ts
-export type Order = {
-    id: number;
-    productName: string;
-    price: number;
-    category: Category;
-}
+export type Comment = {
+  id: string;
+  content: string;
+  isLiked: boolean;
+};
 
-export type Category = "food"|"electronics";
+export type Post = {
+  id: string;
+  title: string;
+  comments: Comment[];
+};
