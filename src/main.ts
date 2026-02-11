@@ -1,26 +1,35 @@
 //main.ts
 
-import { User } from "./interface";
-import { getAdultName, getNameById, updateAge} from "./map-practice";
-const users: User[] = [
-  { id: 1, name: "Alice", age: 25 },
-  { id: 2, name: "Bob", age: 15 },
-  { id: 3, name: "Charlie", age: 30 },
-  { id: 4, name: "David", age: 12 },
-];
+import type { Order, Category } from "./interface";
 
-const adultName = getAdultName(users);
-console.log(adultName);
-
-try{
-    const user = getNameById(users, 99);
-    console.log(user);
+// 擬似API関数（1秒後にデータを返す）
+const fetchOrders = (): Promise<Order[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, productName: "りんご", price: 150, category: "food" },
+        { id: 2, productName: "スマホ", price: 80000, category: "electronics" },
+        { id: 3, productName: "バナナ", price: 100, category: "food" },
+        { id: 4, productName: "テレビ", price: 50000, category: "electronics" },
+      ]);
+    }, 1000);
+  });
+};
+function extractOrderByCategory(orders:Order[], category:Category){
+    return orders.filter(order=>order.category === category);
 }
-catch(error){
-    console.log(String(error));
+function sumPrice(orders:Order[]):number{
+    return orders.reduce((sum, order)=>sum+order.price,0);
+}
+function renderPrice(price:number, unit:string="円"):void{
+    const formattedPrice = price.toLocaleString();
+    console.log(`${formattedPrice} ${unit}`);
+}
+async function main():Promise<void>{
+    const orders = await fetchOrders();
+    const foodOrders = extractOrderByCategory(orders, "electronics");
+    const foodPrice = sumPrice(foodOrders);
+    renderPrice(foodPrice);
 }
 
-console.log(users)
-const newUsers = updateAge(users, 2, 16);
-console.log(newUsers);
-console.log(users);
+await main();

@@ -1,6 +1,9 @@
 //interface.ts
-export type User = {
-  id: number;
-  name: string;
-  age: number;
-};
+export type Order = {
+    id: number;
+    productName: string;
+    price: number;
+    category: Category;
+}
+
+export type Category = "food"|"electronics";
