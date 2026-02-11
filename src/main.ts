@@ -1,17 +1,16 @@
 //main.ts
-import { Post } from "./interface";
-import { toggleCommentLike, getLikedComments } from "./utils";
-const initialPost: Post = {
-  id: "p1",
-  title: "TypeScript学習中!",
-  comments: [
-    { id: "c1", content: "いいですね！", isLiked: false },
-    { id: "c2", content: " shの意味わかりやすいです", isLiked: false },
-  ],
+import { handleResponse } from "./utils";
+import { ApiResponse } from "./interface";
+const successCase: ApiResponse = {
+  status: "success",
+  data: ["TypeScript", "React", "Next.js"],
 };
 
-const toggledPost = toggleCommentLike(initialPost, "c2");
-console.log(toggledPost);
-console.log(initialPost);
-const likedComments = getLikedComments(toggledPost);
-console.log(likedComments);
+// ケース2: エラー時
+const errorCase: ApiResponse = {
+  status: "error",
+  message: "通信に失敗しました。インターネット接続を確認してください。",
+};
+
+console.log(handleResponse(successCase));
+console.log(handleResponse(errorCase));

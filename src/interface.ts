@@ -1,12 +1,14 @@
 //interface.ts
-export type Comment = {
-  id: string;
-  content: string;
-  isLiked: boolean;
+
+type SuccessResponse = {
+  status: "success";
+  data: string[];
 };
 
-export type Post = {
-  id: string;
-  title: string;
-  comments: Comment[];
+type ErrorResponse = {
+  status: "error";  
+  message: string;
 };
+
+
+export type ApiResponse = SuccessResponse | ErrorResponse;
